@@ -6,8 +6,15 @@
     android:padding="16dp" >
 
     <TextView
+        android:id="@+id/result_text"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_weight="0.15" />
+
+    <TextView
         android:id="@+id/caption_text"
-        android:layout_width="wrap_content"
+        android:layout_width="346dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -21,16 +28,10 @@
         android:gravity="center"
         android:background="#ccfefe">
 
-        <TextView
-            android:id="@+id/result_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/imageView"
-            android:src="@drawable/robot" />
+            android:src="@drawable/ao" />
     </LinearLayout>
 </LinearLayout>
