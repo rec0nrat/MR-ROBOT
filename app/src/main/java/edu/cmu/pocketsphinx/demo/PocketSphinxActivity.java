@@ -63,7 +63,7 @@ public class PocketSphinxActivity extends Activity implements
     private static final String MENU_SEARCH = "menu";
 
     /* Keyword we are looking for to activate menu */
-    private static final String KEYPHRASE = "mister robot";
+    private static final String KEYPHRASE = "awsome oh";
 
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
@@ -152,6 +152,7 @@ public class PocketSphinxActivity extends Activity implements
      * keyword spotting mode we can react here, in other modes we need to wait
      * for final result in onResult.
      */
+
     @Override
     public void onPartialResult(Hypothesis hypothesis) {
         if (hypothesis == null)
@@ -246,6 +247,7 @@ public class PocketSphinxActivity extends Activity implements
         // Phonetic search
         File phoneticModel = new File(assetsDir, "en-phone.dmp");
         recognizer.addAllphoneSearch(PHONE_SEARCH, phoneticModel);
+
     }
 
     @Override
