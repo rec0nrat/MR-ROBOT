@@ -37,6 +37,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,7 @@ public class PocketSphinxActivity extends Activity implements
     private static final String DIGITS_SEARCH = "digits";
     private static final String PHONE_SEARCH = "phones";
     private static final String MENU_SEARCH = "menu";
+    private static final String TURN_RIGHT = "turn right";
 
     /* Keyword we are looking for to activate menu */
     private static final String KEYPHRASE = "mister robot";
@@ -70,6 +72,8 @@ public class PocketSphinxActivity extends Activity implements
 
     private SpeechRecognizer recognizer;
     private HashMap<String, Integer> captions;
+
+    private boolean isUnlocked = false;
 
     @Override
     public void onCreate(Bundle state) {
@@ -157,8 +161,16 @@ public class PocketSphinxActivity extends Activity implements
         if (hypothesis == null)
             return;
 
+        Log.i("Checking messages:", isUnlocked +"");
+
         String text = hypothesis.getHypstr();
-        if (text.equals(KEYPHRASE))
+        Log.i("Checking messages:", text);
+
+        ((TextView) findViewById(R.id.result_text)).setText(text);
+        if (text.equals(KEYPHRASE) ){
+          switchSearch(MENU_SEARCH);
+        }
+            /*
             switchSearch(MENU_SEARCH);
         else if (text.equals(DIGITS_SEARCH))
             switchSearch(DIGITS_SEARCH);
@@ -168,6 +180,8 @@ public class PocketSphinxActivity extends Activity implements
             switchSearch(FORECAST_SEARCH);
         else
             ((TextView) findViewById(R.id.result_text)).setText(text);
+            */
+
     }
 
     /**
@@ -175,9 +189,11 @@ public class PocketSphinxActivity extends Activity implements
      */
     @Override
     public void onResult(Hypothesis hypothesis) {
+
         ((TextView) findViewById(R.id.result_text)).setText("");
         if (hypothesis != null) {
             String text = hypothesis.getHypstr();
+
             makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
         }
     }
@@ -185,6 +201,7 @@ public class PocketSphinxActivity extends Activity implements
     @Override
     public void onBeginningOfSpeech() {
     }
+
 
     /**
      * We stop recognizer here to get a final result
@@ -229,12 +246,19 @@ public class PocketSphinxActivity extends Activity implements
          */
 
         // Create keyword-activation search.
-        recognizer.addKeyphraseSearch(KWS_SEARCH, KEYPHRASE);
+        recognizer.addKeyphraseSearch(KWS_SEARCH, KEYPHRASE );
+
+        /*
+        recognizer.addKeyphraseSearch(KWS_SEARCH, "turn left");
+        recognizer.addKeyphraseSearch(KWS_SEARCH, "go forward");
+        recognizer.addKeyphraseSearch(KWS_SEARCH, "stop");
+        recognizer.addKeyphraseSearch(KWS_SEARCH, "give me a movie idea");
+        */
 
         // Create grammar-based search for selection between demos
         File menuGrammar = new File(assetsDir, "menu.gram");
         recognizer.addGrammarSearch(MENU_SEARCH, menuGrammar);
-
+/*
         // Create grammar-based search for digit recognition
         File digitsGrammar = new File(assetsDir, "digits.gram");
         recognizer.addGrammarSearch(DIGITS_SEARCH, digitsGrammar);
@@ -246,6 +270,7 @@ public class PocketSphinxActivity extends Activity implements
         // Phonetic search
         File phoneticModel = new File(assetsDir, "en-phone.dmp");
         recognizer.addAllphoneSearch(PHONE_SEARCH, phoneticModel);
+        */
     }
 
     @Override
